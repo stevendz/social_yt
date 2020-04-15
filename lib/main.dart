@@ -36,7 +36,201 @@ class MyApp extends StatelessWidget {
       home: PageView(
         children: <Widget>[
           SocialScreen(),
-          //FeedScreen(),
+          FeedScreen(),
+        ],
+      ),
+    );
+  }
+}
+
+class FeedScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomPadding: false,
+      body: ListView(
+        children: <Widget>[
+          CustomFeedHeader(),
+          Storys(),
+          PostFeed(),
+        ],
+      ),
+    );
+  }
+}
+
+class PostFeed extends StatelessWidget {
+  const PostFeed({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      child: ListView.builder(
+        shrinkWrap: true,
+        itemCount: avatars.length,
+        physics: NeverScrollableScrollPhysics(),
+        itemBuilder: (context, index) {
+          return Container(
+            height: 400,
+            alignment: Alignment.bottomCenter,
+            margin: EdgeInsets.all(25),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(50),
+              image: DecorationImage(
+                image: images[index],
+                fit: BoxFit.cover,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  blurRadius: 20,
+                  color: secondColor.withOpacity(0.25),
+                ),
+              ],
+            ),
+            child: Container(
+              height: 90,
+              padding: EdgeInsets.all(20),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(50),
+              ),
+              child: Row(
+                children: <Widget>[
+                  CircleAvatar(
+                    radius: 25,
+                    backgroundImage: avatars[index],
+                  ),
+                  SizedBox(width: 15),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        'Jessica Parker',
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: mainColor,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        '1 hour ago',
+                        style: TextStyle(
+                          fontSize: 15,
+                          color: secondColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                  Spacer(),
+                  Icon(
+                    Icons.more_vert,
+                    color: mainColor,
+                    size: 30,
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+}
+
+class Storys extends StatelessWidget {
+  const Storys({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      height: 100,
+      padding: EdgeInsets.only(left: 25),
+      child: ListView.builder(
+        scrollDirection: Axis.horizontal,
+        itemCount: avatars.length + 1,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return index == 0
+              ? Container(
+                  height: 80,
+                  width: 80,
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          blurRadius: 20,
+                          color: secondColor.withOpacity(0.25),
+                        )
+                      ]),
+                  child: Icon(Icons.add, size: 35, color: secondColor),
+                )
+              : Container(
+                  height: 80,
+                  width: 80,
+                  padding: EdgeInsets.all(5),
+                  margin: EdgeInsets.all(10),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    gradient: LinearGradient(
+                      colors: [
+                        Colors.deepOrange.shade200,
+                        Colors.blue.shade300
+                      ],
+                    ),
+                  ),
+                  child: CircleAvatar(
+                    backgroundImage: avatars[index - 1],
+                  ),
+                );
+        },
+      ),
+    );
+  }
+}
+
+class CustomFeedHeader extends StatelessWidget {
+  const CustomFeedHeader({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.fromLTRB(25, 50, 50, 25),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text(
+                'Hello,',
+                style: TextStyle(color: secondColor, fontSize: 20),
+              ),
+              Text(
+                'Anastasia',
+                style: TextStyle(color: mainColor, fontSize: 30),
+              ),
+            ],
+          ),
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Colors.white,
+              boxShadow: [
+                BoxShadow(color: secondColor.withOpacity(0.5), blurRadius: 20),
+              ],
+            ),
+            child: Icon(Icons.search, color: secondColor),
+          ),
         ],
       ),
     );
